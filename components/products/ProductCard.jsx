@@ -1,8 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
+import { storage } from "@/utils/firebase";
+import { ref, getDownloadURL } from 'firebase/storage';
 
-const ProductCard = ({ item }) => {
-
+const ProductCard = async ({ item }) => {
+    const imageUrl = await getDownloadURL(ref(storage, `${item.image}`));
     return (
         <article className="basis-72 shadow-lg rounded">
             <Link href={`/productos/detail/${item.slug}`}
@@ -10,7 +12,7 @@ const ProductCard = ({ item }) => {
             >
                 <Image
                     alt={item.title}
-                    src={item.image}
+                    src={imageUrl}
                     width={288}
                     height={288}
                 />
