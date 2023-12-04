@@ -1,11 +1,14 @@
-import Image from "next/image"
-import AmountSelect from '@/components/products/AmountSelect'
-import ButtonBack from "../utils/ButtonBack"
+import Image from "next/image";
+import AmountSelect from '@/components/products/AmountSelect';
+import ButtonBack from "../utils/ButtonBack";
+import { storage } from "@/utils/firebase";
+import { ref, getDownloadURL } from 'firebase/storage';
 
 const ProductDetail = async ({ slug }) => {
     const item = await fetch(`${process.env.BASE_URL}/api/productos/detail/${slug}`, {
         cache: 'no-store'
     }).then(res => res.json())
+    const imageUrl = await getDownloadURL(ref(storage, `products/${slug}.webp`));
 
     return (
         <div className="max-w-4xl m-auto">
@@ -16,7 +19,7 @@ const ProductDetail = async ({ slug }) => {
             <section className="flex gap-6">
                 <div className="relative basis-1/2">
                     <Image
-                        src={item.image}
+                        src={imageUrl}
                         alt={item.title}
                         width={860}
                         height={860}
