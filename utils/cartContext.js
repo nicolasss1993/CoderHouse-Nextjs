@@ -7,7 +7,12 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
     const addToCart = (item) => {
-        setCart([...cart, item]);
+        const isInCart = cart.find( e => e.slug === item.slug);
+        if (isInCart) {
+            isInCart.amount += 1;
+        } else {
+            setCart([...cart, item]);
+        };
     };
 
     const removeFromCart = (itemId) => {
@@ -19,7 +24,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const amountProduct = (slug) => {
-        return cart.filter(e => e.slug === slug).length;
+        return cart.filter(e => e.slug === slug)[0].amount;
     }
 
     const amountCart = () => {

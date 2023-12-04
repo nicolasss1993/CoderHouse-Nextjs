@@ -1,13 +1,25 @@
 import CategoryMenu from "@/components/products/CategoryMenu";
-import ProductList from "@/components/products/ProductList"
+import ProductList from "@/components/products/ProductList";
+import { LinkProducts } from "@/utils/constants";
 
-export async function generateMetadata({params, searchParams}, parent) {
+export async function generateMetadata({ params, searchParams }, parent) {
     return {
         title: `Capellari - ${params.categoria}`,
     }
 }
 
-const Productos = ({params}) => {
+export const revalidate = 1800;
+
+export async function generateStaticParams() {
+    const categoryList = LinkProducts.map(e => {
+        const category = e.value.split('/')
+        return { category : category.pop() }
+    });
+
+    return categoryList;
+};
+
+const Productos = ({ params }) => {
     const { category } = params
     return (
         <main className="container m-auto bg-body">
@@ -15,7 +27,7 @@ const Productos = ({params}) => {
 
             <div className="flex gap-10">
                 <CategoryMenu />
-                <ProductList category={category}/>
+                <ProductList category={category} />
             </div>
         </main>
     )

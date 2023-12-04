@@ -1,10 +1,11 @@
 import Image from "next/image"
 import AmountSelect from '@/components/products/AmountSelect'
 import ButtonBack from "../utils/ButtonBack"
-import { mockData } from "@/utils/data"
 
 const ProductDetail = async ({ slug }) => {
-    const item = mockData.find(p => p.slug === slug)
+    const item = await fetch(`${process.env.BASE_URL}/api/productos/detail/${slug}`, {
+        cache: 'no-store'
+    }).then(res => res.json())
 
     return (
         <div className="max-w-4xl m-auto">

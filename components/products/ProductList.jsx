@@ -1,8 +1,11 @@
 import ProductCard from "./ProductCard"
-import { mockData } from "@/utils/data"
 
 const ProductList = async ({ category }) => {
-    const items = category === 'all' ? mockData : mockData.filter(item => item.type === category)
+    const url = `${process.env.BASE_URL}/api/productos/${category}`
+    const items = await fetch(url, {
+        cache: 'no-store',
+    }).then(r => r.json())
+
     return (
         <section className="container m-auto flex justify-center items-center gap-12 flex-wrap">
             {
