@@ -4,7 +4,7 @@ import { useCart } from "@/utils/cartContext";
 import CartItem from '@/components/cart/CartItem';
 
 const CartTable = () => {
-    const { cart, amountPrice, amountProduct } = useCart()
+    const { cart, amountPrice } = useCart()
     return (
         <>
             <table className="table-auto w-full max-w-screen-md mx-auto my-8">
@@ -17,7 +17,7 @@ const CartTable = () => {
                 </thead>
                 <tbody>
                     {cart.map((product) => (
-                        <CartItem key={product.id} product={product} amount={amountProduct(product.slug)}/>
+                        <CartItem key={product.id} product={product} />
                     ))}
                 </tbody>
             </table>

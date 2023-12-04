@@ -4,13 +4,13 @@ import { useCart } from "@/utils/cartContext";
 
 const CartItem = ({ product }) => {
     const { amountProduct } = useCart();
-    const amount = amountProduct();
+    const amount = amountProduct(product.slug);
     return (
-        <tr>
+        <tr key={product.slug}>
             <td className='text-center'>
                 <Image
                     src={product.image}
-                    alt={product.name}
+                    alt={product.slug}
                     width={48}
                     height={48}
                     className="object-cover mx-auto"
