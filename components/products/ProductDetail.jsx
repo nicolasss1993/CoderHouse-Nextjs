@@ -42,11 +42,11 @@ const ProductDetail = async ({ slug }) => {
         fetchData();
     }, [slug, item]);*/
 
-    if (!item) {
+    /*if (!item) {
         console.log("sss");
         return null;
-    }
-
+    }*/
+    console.log(item)
     return (
         <div className="max-w-4xl m-auto">
             <section className="flex gap-6">
