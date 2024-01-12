@@ -37,19 +37,19 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
                 </div>
             )}
             {popUpConfirm &&
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md flex flex-col items-center">
                     <p className="mb-4">¿Estás seguro de que quieres eliminar este registro?</p>
                     <Boton
                         onClick={() => {
                             setTimeout(() => deleteProduct(product.slug), 1000);
                             OpenPopUpConfirm();
                         }}
-                        className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600"
+                        className="w-1/2 bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600"
                         text="Si"
                     />
                     <Boton
                         onClick={() => OpenPopUpConfirm()}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        className="w-1/2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                         text="No"
                     />
                 </div>

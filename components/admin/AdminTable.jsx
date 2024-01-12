@@ -20,6 +20,7 @@ const ProductAdminTable = () => {
     const popUpCreateOpen = () => {
         setOpenPopUpCreate(!openPopUpCreate);
         refreshData();
+        setUpdate(2);
     };
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const ProductAdminTable = () => {
         };
 
         fetchProducts();
-    }, [update]);
+    }, [update, product]);
 
     return (
         <>
@@ -48,7 +49,7 @@ const ProductAdminTable = () => {
                 {openPopUpCreate && (
                     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
                         <div className="container m-auto mt-6 max-w-lg bg-white p-8 rounded-lg">
-                            <CreateForm openPopUp={() => popUpCreateOpen()} />
+                            <CreateForm openPopUp={() => popUpCreateOpen()} updateData={refreshData} />
                         </div>
                     </div>
                 )}
