@@ -17,13 +17,12 @@ const ProductAdminTable = () => {
         console.log('Refresh data', update);
         setUpdate(!update);
         console.log('Cambie el update ', update);
-        router.refresh()
+        router.push('/admin/table');
     };
 
     const popUpCreateOpen = () => {
         setOpenPopUpCreate(!openPopUpCreate);
         refreshData();
-        setUpdate(2);
     };
 
     useEffect(() => {

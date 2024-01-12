@@ -18,13 +18,12 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
         refreshData();
-        router.refresh()
+        router.push('/admin/table');
     };
 
     const deleteProduct = (slug) => {
         DelProduct(slug);
         refreshData();
-        router.refresh()
     };
 
     return (
