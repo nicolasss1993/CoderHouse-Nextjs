@@ -6,8 +6,7 @@ import Boton from '@/components/utils/Button';
 import CreateForm from './CreateForm';
 import { getCategory } from '@/utils/constants';
 
-const ProductAdminTable = () => {
-    const [products, setProducts] = useState([]);
+const ProductAdminTable = ({ products }) => {
     const [showProduct, setShowProduct] = useState(false);
     const [showUsers, setShowUsers] = useState(false);
     const [showSales, setShowSales] = useState(false);
@@ -17,18 +16,6 @@ const ProductAdminTable = () => {
     const refreshData = () => {
         router.refresh();
     };
-
-    useEffect(() => {
-        console.log('Effect ', products)
-        const product = async () => {
-            try {
-                setProducts(await getCategory())
-            } catch(err) {
-                return err;
-            }
-        }
-        product();
-    }, []);
 
     const popUpCreateOpen = () => {
         setOpenPopUpCreate(!openPopUpCreate);
