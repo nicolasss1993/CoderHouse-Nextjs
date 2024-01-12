@@ -7,22 +7,24 @@ import { DelProduct } from '@/utils/constants';
 import { useRouter } from "next/navigation"
 
 const ProductAdminItem = ({ product, refreshData, onDelete }) => {
-    console.log('Entro al AdminItem ', product)
     const router = useRouter();
     const [openPopUpEdit, setOpenPopUpEdit] = useState(false);
     const [popUpConfirm, setPopUpConfirm] = useState(false);
     const popUpEditOpen = () => {
         setOpenPopUpEdit(!openPopUpEdit);
         refreshData();
+        router.refresh()
     };
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
         refreshData();
+        router.refresh()
     };
 
     const deleteProduct = (slug) => {
         DelProduct(slug);
         refreshData();
+        router.refresh()
     };
 
     return (
