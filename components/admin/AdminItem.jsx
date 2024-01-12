@@ -4,18 +4,20 @@ import Boton from '@/components/utils/Button'
 import Image from 'next/image';
 import EditForm from './EditForm';
 import { DelProduct } from '@/utils/constants';
+import { useRouter } from "next/navigation"
 
 const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     console.log('Entro al AdminItem ', product)
+    const router = useRouter();
     const [openPopUpEdit, setOpenPopUpEdit] = useState(false);
     const [popUpConfirm, setPopUpConfirm] = useState(false);
     const popUpEditOpen = () => {
         setOpenPopUpEdit(!openPopUpEdit);
-        refreshData();
+        router.push('/admin/table');
     };
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
-        refreshData();
+        router.push('/admin/table');
     };
 
     const deleteProduct = (slug) => {
