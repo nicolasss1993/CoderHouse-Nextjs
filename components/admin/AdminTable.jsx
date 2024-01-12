@@ -10,10 +10,11 @@ import { getDocs, collection } from "firebase/firestore";
 const ProductAdminTable = () => {
     const [product, setProduct] = useState([])
     const [openPopUpCreate, setOpenPopUpCreate] = useState(false);
+    const [update, setUpdate] = useState(false);
     const router = useRouter();
 
     const refreshData = () => {
-        router.refresh();
+        setUpdate(true);
     };
 
     const popUpCreateOpen = () => {
@@ -29,7 +30,7 @@ const ProductAdminTable = () => {
         };
 
         fetchProducts();
-    }, []);
+    }, [update]);
 
     return (
         <>
