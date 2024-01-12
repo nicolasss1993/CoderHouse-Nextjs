@@ -22,9 +22,8 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     };
 
     const deleteProduct = (slug) => {
-        DelProduct(slug);
+        DelProduct(slug, refreshData);
         refreshData();
-        router.push('/admin/table');
     };
 
     return (

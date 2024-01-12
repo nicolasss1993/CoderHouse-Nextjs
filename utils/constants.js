@@ -42,9 +42,10 @@ export const getDetail = async (slug) => {
     return docSnapshot.data();
 };
 
-export const DelProduct = async (slug) => {
+export const DelProduct = async (slug, refresh) => {
     const documentoRef = doc(db, 'productos', slug);
     await deleteDoc(documentoRef);
+    refresh()
 }
 
 export const LINKS = [

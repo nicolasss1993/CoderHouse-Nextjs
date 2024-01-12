@@ -40,7 +40,7 @@ const ProductAdminTable = () => {
 
         fetchProducts();
     }, [update, router]);
-
+    console.log('PRODUCTOS CANT', product.length);
     return (
         <>
             <div className='flex justify-center align-center mt-8'>
