@@ -11,9 +11,12 @@ const ProductDetail = ({ slug }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("Entre al Effect")
                 const url = `${process.env.VERCEL_URL}/api/productos/detail/${slug}`;
                 const response = await fetch(url, { cache: 'no-store' });
+                console.log("Response del fetch ", response);
                 const itemData = await response.json();
+                console.log("ItemData ", itemData);
 
                 const imageUrl = await getDownloadURL(ref(storage, `products/${slug}.webp`));
 
@@ -21,6 +24,7 @@ const ProductDetail = ({ slug }) => {
                     ...itemData,
                     imageUrl,
                 });
+                console.log('Item Ultimo ', item);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setItem(null);
@@ -28,7 +32,7 @@ const ProductDetail = ({ slug }) => {
         };
 
         fetchData();
-    }, [slug]);
+    }, [slug, item]);
 
     if (!item) {
         console.log("sss");
