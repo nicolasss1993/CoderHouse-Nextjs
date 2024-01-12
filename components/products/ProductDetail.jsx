@@ -1,14 +1,22 @@
-"use client"
-import { useEffect, useState } from 'react';
+//import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import AmountSelect from '@/components/products/AmountSelect';
 import { storage } from '@/utils/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 
-const ProductDetail = ({ slug }) => {
-    const [item, setItem] = useState(null);
+const ProductDetail = async ({ slug }) => {
+    //const [item, setItem] = useState(null);
     console.log("ProductDetail ", slug)
-    useEffect(() => {
+    const item = await fetch(
+        `${process.env.VERCEL_URL}/api/productos/detail/${slug}`,
+        {
+            cache: "no-store",
+            next: {
+                revalidate: 0,
+            },
+        }
+    ).then((r) => r.json());
+    /*useEffect(() => {
         const fetchData = async () => {
             try {
                 console.log("Entre al Effect")
@@ -32,7 +40,7 @@ const ProductDetail = ({ slug }) => {
         };
 
         fetchData();
-    }, [slug, item]);
+    }, [slug, item]);*/
 
     if (!item) {
         console.log("sss");
