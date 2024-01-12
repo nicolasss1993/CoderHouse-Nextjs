@@ -13,11 +13,11 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     const [popUpConfirm, setPopUpConfirm] = useState(false);
     const popUpEditOpen = () => {
         setOpenPopUpEdit(!openPopUpEdit);
-        router.refresh();
+        refreshData();
     };
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
-        router.refresh();
+        refreshData();
     };
 
     const deleteProduct = (slug) => {
