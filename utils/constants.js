@@ -36,6 +36,12 @@ export const AddProductToCar = async (uid, cart) => {
     return updateDoc(docRef, { cart: cart });
 };
 
+export const getDetail = async (slug) => {
+    const docRef = doc(db, "productos", slug)
+    const docSnapshot = await getDoc(docRef)
+    return docSnapshot.data();
+}
+
 export const LINKS = [
     {
         label: "Inicio",

@@ -3,19 +3,12 @@ import Image from 'next/image';
 import AmountSelect from '@/components/products/AmountSelect';
 import { storage } from '@/utils/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
+import { getDetail } from '@/utils/constants';
 
 const ProductDetail = async ({ slug }) => {
     //const [item, setItem] = useState(null);
     console.log("ProductDetail ", slug)
-    const item = await fetch(
-        `${process.env.VERCEL_URL}/api/productos/detail/${slug}`,
-        {
-            cache: "no-store",
-            next: {
-                revalidate: 0,
-            },
-        }
-    ).then((r) => r.json());
+    const item = getDetail(slug);
     /*useEffect(() => {
         const fetchData = async () => {
             try {
