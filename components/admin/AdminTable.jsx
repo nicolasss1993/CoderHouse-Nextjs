@@ -18,12 +18,16 @@ const ProductAdminTable = ({ updateProducts }) => {
     };
 
     useEffect(()=>{
-        const url = process.env.VERCEL_URL + '/api/productos/all'
-        fetch(url, { cache: 'no-store'})
-            .then(r => r.json())
-            .then((data) => {
-                setProducts(data);
-            })
+        const url = `${process.env.VERCEL_URL}/api/productos/all`
+        try {
+            fetch(url, { cache: 'no-store'})
+                .then(r => r.json())
+                .then((data) => {
+                    setProducts(data);
+                })
+        } catch(err) {
+            return err;
+        }
     }, []);
 
     const popUpCreateOpen = () => {

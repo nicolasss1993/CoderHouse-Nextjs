@@ -10,10 +10,14 @@ export const AddProductToCar = async (uid, cart) => {
 };
 
 const ProductDetail = async ({ slug }) => {
-    const url = process.env.VERCEL_URL + `/api/productos/detail/${slug}`
-    const item = await fetch(url, {
-        cache: 'no-store'
-    }).then(res => res.json())
+    const url = `${process.env.VERCEL_URL}/api/productos/detail/${slug}`;
+    try {
+        const item = await fetch(url, {
+            cache: 'no-store'
+        }).then(res => res.json())
+    } catch(err) {
+        return null;
+    }
     const imageUrl = await getDownloadURL(ref(storage, `products/${slug}.webp`));
 
     return (
