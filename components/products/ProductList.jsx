@@ -16,7 +16,6 @@ const getProducts = async (categories) => {
 
 const ProductList = async ({ category }) => {
     const items = await getProducts(category);
-    console.log("ProductList ", items)
     return (
         <section className="container m-auto flex justify-center items-center gap-12 flex-wrap">
             {

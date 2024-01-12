@@ -5,7 +5,7 @@ import ProductAdminItem from './AdminItem';
 import Boton from '@/components/utils/Button';
 import CreateForm from './CreateForm';
 
-const ProductAdminTable = ({ updateProducts }) => {
+const ProductAdminTable = () => {
     const [products, setProducts] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
     const [showUsers, setShowUsers] = useState(false);
@@ -17,13 +17,15 @@ const ProductAdminTable = ({ updateProducts }) => {
         router.refresh();
     };
 
-    useEffect(()=>{
+    useEffect(()=> {
+        console.log('Effect ', products)
         const url = `${process.env.VERCEL_URL}/api/productos/all`
         try {
             fetch(url, { cache: 'no-store'})
                 .then(r => r.json())
                 .then((data) => {
                     setProducts(data);
+                    console.log('Ya guarde la info.')
                 })
         } catch(err) {
             return err;

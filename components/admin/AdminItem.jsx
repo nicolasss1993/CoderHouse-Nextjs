@@ -5,6 +5,7 @@ import Image from 'next/image';
 import EditForm from './EditForm';
 
 const ProductAdminItem = ({ product, refreshData, onDelete }) => {
+    console.log('Entro al AdminItem ', product)
     const [openPopUpEdit, setOpenPopUpEdit] = useState(false);
     const [popUpConfirm, setPopUpConfirm] = useState(false);
     const popUpEditOpen = () => {
