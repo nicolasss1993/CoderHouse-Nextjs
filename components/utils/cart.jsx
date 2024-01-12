@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useCart } from "@/utils/cartContext"
+import { useCart } from "@/utils/context/cartContext"
 import Image from "next/image"
 
 const CartWidget = () => {

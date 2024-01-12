@@ -1,15 +1,16 @@
 'use client'
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { getDbCart } from '../constants';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
-    const addToCart = (item) => {
+    const addToCart = (item, amount) => {
         const isInCart = cart.find( e => e.slug === item.slug);
         if (isInCart) {
-            isInCart.amount += 1;
+            isInCart.amount += amount;
         } else {
             setCart([...cart, item]);
         };
@@ -21,6 +22,11 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => {
         setCart([]);
+    };
+
+    const setDbCart = async (uid) => {
+        const dbCart = await getDbCart(uid);
+        setCart(dbCart.cart);
     };
 
     const amountProduct = (slug) => {
@@ -35,8 +41,12 @@ export const CartProvider = ({ children }) => {
         return cart.reduce((total, item) => total + item.amount * item.price, 0);
     }
 
+    const getCart = () => {
+        return cart
+    }
+
     return (
-        <CartContext.Provider value={{cart, addToCart, removeFromCart, clearCart, amountCart, amountPrice, amountProduct }}>
+        <CartContext.Provider value={{cart, addToCart, removeFromCart, clearCart, amountCart, amountPrice, amountProduct, getCart, setDbCart }}>
             {children}
         </CartContext.Provider>
     );

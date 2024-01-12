@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { useCart } from "@/utils/cartContext";
+import { useCart } from "@/utils/context/cartContext";
 
 const CartItem = ({ product }) => {
     const { amountProduct } = useCart();
