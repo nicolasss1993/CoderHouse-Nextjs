@@ -15,7 +15,6 @@ const ProductAdminTable = () => {
 
     const refreshData = () => {
         setUpdate(true);
-        router.refresh();
     };
 
     const popUpCreateOpen = () => {
@@ -25,10 +24,14 @@ const ProductAdminTable = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            console.log("Entre la effectivo")
-            const querySnapshot = await getDocs(collection(db, "productos"));
-            const products = querySnapshot.docs.map((doc) => doc.data());
-            setProduct(products);
+            try {
+                console.log("Entre la effectivo")
+                const querySnapshot = await getDocs(collection(db, "productos"));
+                const products = querySnapshot.docs.map((doc) => doc.data());
+                setProduct(products);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
         fetchProducts();

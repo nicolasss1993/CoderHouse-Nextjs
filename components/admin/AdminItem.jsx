@@ -13,7 +13,7 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     const popUpEditOpen = () => {
         setOpenPopUpEdit(!openPopUpEdit);
         refreshData();
-        router.refresh()
+        router.push('/admin/table');
     };
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
