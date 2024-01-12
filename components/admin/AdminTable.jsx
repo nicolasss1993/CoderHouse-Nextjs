@@ -14,7 +14,10 @@ const ProductAdminTable = () => {
     const router = useRouter();
 
     const refreshData = () => {
-        setUpdate(true);
+        console.log('Refresh data', update);
+        setUpdate(!update);
+        console.log('Cambie el update ', update);
+        router.refresh()
     };
 
     const popUpCreateOpen = () => {
@@ -24,6 +27,7 @@ const ProductAdminTable = () => {
     };
 
     useEffect(() => {
+        console.log("Entre al Effect primer nivel.")
         const fetchProducts = async () => {
             try {
                 console.log("Entre la effectivo")
@@ -36,7 +40,7 @@ const ProductAdminTable = () => {
         };
 
         fetchProducts();
-    }, [update]);
+    }, [update, router]);
 
     return (
         <>
