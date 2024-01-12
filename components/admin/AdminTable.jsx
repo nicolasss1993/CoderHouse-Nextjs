@@ -15,6 +15,7 @@ const ProductAdminTable = () => {
 
     const refreshData = () => {
         setUpdate(true);
+        router.refresh();
     };
 
     const popUpCreateOpen = () => {
