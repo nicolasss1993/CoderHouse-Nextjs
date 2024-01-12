@@ -21,6 +21,7 @@ const ProductAdminTable = ({ products }) => {
     };
 
     useEffect(()=> {
+        console.log('p ',p);
         const fect = async () => {
             setP(await getCategory());
         }
