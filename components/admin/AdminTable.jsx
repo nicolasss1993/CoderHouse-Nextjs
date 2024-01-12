@@ -24,6 +24,7 @@ const ProductAdminTable = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            console.log("Entre la effectivo")
             const querySnapshot = await getDocs(collection(db, "productos"));
             const products = querySnapshot.docs.map((doc) => doc.data());
             setProduct(products);
