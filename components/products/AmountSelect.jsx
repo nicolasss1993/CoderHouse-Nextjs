@@ -4,7 +4,7 @@ import { useCart } from "@/utils/context/cartContext";
 import Counter from "@/components/utils/Counter";
 import Boton from "@/components/utils/Button";
 import ButtonBack from "../utils/ButtonBack";
-import { AddProductToCar } from "@/components/products/ProductDetail";
+import { AddProductToCar } from "@/utils/constants";
 import { useAuthContext } from "@/utils/context/authContext";
 
 const AmountSelector = ({ item }) => {
@@ -12,7 +12,7 @@ const AmountSelector = ({ item }) => {
     const [amount, setAmount] = useState(1);
     const [update, setUpdate] = useState(false);
     const { userId } = useAuthContext();
-
+    console.log("AmountSelect ", item);
     const handleAddToCart = () => {
         addToCart({...item, amount});
         setUpdate(true);

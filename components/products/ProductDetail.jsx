@@ -2,18 +2,12 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import AmountSelect from '@/components/products/AmountSelect';
-import { storage, db } from '@/utils/firebase';
+import { storage } from '@/utils/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-
-export const AddProductToCar = async (uid, cart) => {
-    const docRef = doc(db, "cart", uid);
-    return updateDoc(docRef, { cart: cart });
-};
 
 const ProductDetail = ({ slug }) => {
     const [item, setItem] = useState(null);
-
+    console.log("ProductDetail ", slug)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -49,7 +43,7 @@ const ProductDetail = ({ slug }) => {
                 <div className="basis-1/2">
                     <h2 className="text-2xl font-semibold border-b border-gray-200 pb-4 mb-4">{item.title}</h2>
                     <p className="text-4xl">$ {item.price}</p>
-                    <AmountSelect item={item} addToCart={() => addToCart('usuario_id', 'nuevo_carrito')} />
+                    <AmountSelect item={item} />
                 </div>
             </section>
             <section className="mt-12">
