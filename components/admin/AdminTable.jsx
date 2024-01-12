@@ -7,9 +7,7 @@ import CreateForm from './CreateForm';
 import { getCategory } from '@/utils/constants';
 
 const ProductAdminTable = ({ products }) => {
-    const [showProduct, setShowProduct] = useState(false);
-    const [showUsers, setShowUsers] = useState(false);
-    const [showSales, setShowSales] = useState(false);
+    const [p, setP] = useState(products)
     const [openPopUpCreate, setOpenPopUpCreate] = useState(false);
     const router = useRouter();
 
@@ -21,6 +19,13 @@ const ProductAdminTable = ({ products }) => {
         setOpenPopUpCreate(!openPopUpCreate);
         refreshData();
     };
+
+    useEffect(()=> {
+        const fect = async () => {
+            setP(await getCategory());
+        }
+        fect();
+    }, [p])
 
     return (
         <>
@@ -50,7 +55,7 @@ const ProductAdminTable = ({ products }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product, idx) => (
+                    {p.map((product, idx) => (
                         <ProductAdminItem key={product.slug} product={product} refreshData={() => refreshData()} />
                     ))}
                 </tbody>
