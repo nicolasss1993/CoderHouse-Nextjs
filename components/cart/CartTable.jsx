@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from "@/utils/context/cartContext";
 import CartItem from '@/components/cart/CartItem';
 import Boton from '../utils/Button';
-import { AddProductToCar } from "@/components/products/ProductDetail";
+import { AddProductToCar } from '@/utils/constants';
 import { useAuthContext } from "@/utils/context/authContext";
 import { CheckoutForm } from '../utils/CheckoutForm';
 import { SuccessMessage } from '../utils/SucessMessage';

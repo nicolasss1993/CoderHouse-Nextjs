@@ -31,6 +31,11 @@ export const getCategory = async (category) => {
     return docs;
 }
 
+export const AddProductToCar = async (uid, cart) => {
+    const docRef = doc(db, "cart", uid);
+    return updateDoc(docRef, { cart: cart });
+};
+
 export const LINKS = [
     {
         label: "Inicio",
