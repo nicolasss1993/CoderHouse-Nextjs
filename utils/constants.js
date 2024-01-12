@@ -40,6 +40,11 @@ export const getDetail = async (slug) => {
     const docRef = doc(db, "productos", slug)
     const docSnapshot = await getDoc(docRef)
     return docSnapshot.data();
+};
+
+export const DelProduct = async (slug) => {
+    const documentoRef = doc(db, 'productos', slug);
+    await deleteDoc(documentoRef);
 }
 
 export const LINKS = [

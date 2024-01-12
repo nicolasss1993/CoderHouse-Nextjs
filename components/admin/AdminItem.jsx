@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Boton from '@/components/utils/Button'
 import Image from 'next/image';
 import EditForm from './EditForm';
+import { DelProduct } from '@/utils/constants';
 
 const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     console.log('Entro al AdminItem ', product)
@@ -18,16 +19,8 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
     };
 
     const deleteProduct = (slug) => {
-        const url = `${process.env.VERCEL_URL}/api/admin/table/${slug}`;
-        console.log('URL ', url);
-        try {
-            fetch(url, { method: 'DELETE'})
-                .then(r => r.json())
-                .then(() => refreshData())
-        } catch(error) {
-            return null;
-        }
-    }
+        DelProduct(slug);
+    };
 
     return (
         <React.Fragment key={product.slug}>
