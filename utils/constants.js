@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, addDoc, collection, updateDoc, query, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, addDoc, collection, updateDoc, query, where, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 export const getDbCart = async (uid) => {
