@@ -36,7 +36,7 @@ const ProductAdminTable = () => {
         };
 
         fetchProducts();
-    }, [update, product]);
+    }, [update]);
 
     return (
         <>
