@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation"
 import ProductAdminItem from './AdminItem';
 import Boton from '@/components/utils/Button';
 import CreateForm from './CreateForm';
-import { getCategory } from '@/utils/constants';
+import { db } from '@/utils/firebase';
+import { getDocs, collection } from "firebase/firestore";
 
-const ProductAdminTable = ({ products }) => {
-    const [p, setP] = useState(products)
+const ProductAdminTable = () => {
+    const [product, setProduct] = useState([])
     const [openPopUpCreate, setOpenPopUpCreate] = useState(false);
     const router = useRouter();
 
@@ -20,13 +21,15 @@ const ProductAdminTable = ({ products }) => {
         refreshData();
     };
 
-    useEffect(()=> {
-        console.log('p ',p);
-        const fect = async () => {
-            setP(await getCategory());
-        }
-        fect();
-    }, [p])
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const querySnapshot = await getDocs(collection(db, "productos"));
+            const products = querySnapshot.docs.map((doc) => doc.data());
+            setProduct(products);
+        };
+
+        fetchProducts();
+    }, []);
 
     return (
         <>
@@ -56,7 +59,7 @@ const ProductAdminTable = ({ products }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {p.map((product, idx) => (
+                    {product.map((product, idx) => (
                         <ProductAdminItem key={product.slug} product={product} refreshData={() => refreshData()} />
                     ))}
                 </tbody>
