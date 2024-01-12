@@ -8,5 +8,5 @@ export async function GET(_, { params }) {
     const docRef = doc(db, "productos", slug)
     const docSnapshot = await getDoc(docRef)
 
-    return NextResponse.json( docSnapshot.data() )
+    return NextResponse.json(docSnapshot.data())
 }

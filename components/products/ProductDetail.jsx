@@ -1,21 +1,23 @@
 import Image from "next/image";
 import AmountSelect from '@/components/products/AmountSelect';
-import ButtonBack from "../utils/ButtonBack";
-import { storage } from "@/utils/firebase";
+import { storage, db } from "@/utils/firebase";
 import { ref, getDownloadURL } from 'firebase/storage';
+import { doc, updateDoc } from "firebase/firestore"
+
+export const AddProductToCar = async (uid, cart) => {
+    const docRef = doc(db, "cart", uid);
+    return updateDoc(docRef, { cart: cart });
+};
 
 const ProductDetail = async ({ slug }) => {
-    const item = await fetch(`${process.env.BASE_URL}/api/productos/detail/${slug}`, {
+    const url = process.env.VERCEL_URL + `api/productos/detail/${slug}`
+    const item = await fetch(url, {
         cache: 'no-store'
     }).then(res => res.json())
     const imageUrl = await getDownloadURL(ref(storage, `products/${slug}.webp`));
 
     return (
         <div className="max-w-4xl m-auto">
-            <ButtonBack
-                className='rounded-lg py-2 px-4 bg-blue-500'
-                text="< Volver"
-            />
             <section className="flex gap-6">
                 <div className="relative basis-1/2">
                     <Image

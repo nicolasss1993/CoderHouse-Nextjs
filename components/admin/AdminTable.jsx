@@ -1,17 +1,51 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/navigation"
 import ProductAdminItem from './AdminItem';
-import Button from '@/components/utils/Button'
+import Boton from '@/components/utils/Button';
+import CreateForm from './CreateForm';
 
-const ProductAdminTable = ({ products, onEdit, onDelete }) => {
+const ProductAdminTable = ({ updateProducts }) => {
+    const [products, setProducts] = useState([]);
+    const [showProduct, setShowProduct] = useState(false);
+    const [showUsers, setShowUsers] = useState(false);
+    const [showSales, setShowSales] = useState(false);
+    const [openPopUpCreate, setOpenPopUpCreate] = useState(false);
+    const router = useRouter();
+
+    const refreshData = () => {
+        router.refresh();
+    };
+
+    useEffect(()=>{
+        const url = process.env.VERCEL_URL + 'api/productos/all'
+        fetch(url, { cache: 'no-store'})
+            .then(r => r.json())
+            .then((data) => {
+                setProducts(data);
+            })
+    }, []);
+
+    const popUpCreateOpen = () => {
+        setOpenPopUpCreate(!openPopUpCreate);
+        refreshData();
+    };
+
     return (
         <>
             <div className='flex justify-center align-center mt-8'>
-                <Button
-                    onClick={() => alert('Crear en construccion')}
+                <Boton
+                    onClick={() => popUpCreateOpen()}
                     className="bg-green-500 mr-2 rounded-lg p-4"
                     text="Agregar producto"
                 />
+                {openPopUpCreate && (
+                    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
+                        <div className="container m-auto mt-6 max-w-lg bg-white p-8 rounded-lg">
+                            <CreateForm openPopUp={() => popUpCreateOpen()} />
+                        </div>
+                    </div>
+                )}
             </div>
             <table className="table-auto w-full max-w-screen-md mx-auto my-8">
                 <thead>
@@ -20,15 +54,17 @@ const ProductAdminTable = ({ products, onEdit, onDelete }) => {
                         <th className="border p-2">Nombre</th>
                         <th className="border p-2">Tipo</th>
                         <th className="border p-2">Stock</th>
+                        <th className='border p-2'>Precio</th>
                         <th className="border p-2">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product) => (
-                        <ProductAdminItem key={product.slug} product={product} onEdit={onEdit} onDelete={onDelete} />
+                    {products.map((product, idx) => (
+                        <ProductAdminItem key={product.slug} product={product} refreshData={() => refreshData()} />
                     ))}
                 </tbody>
             </table>
+
         </>
     );
 };

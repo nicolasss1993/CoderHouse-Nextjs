@@ -15,6 +15,9 @@ const nextConfig = {
                 pathname: '/**',
             },
         ],
+    },
+    env: {
+        VERCEL_URL: process.env.VERCEL_URL
     }
 }
 
