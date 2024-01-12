@@ -31,6 +31,7 @@ const ProductDetail = ({ slug }) => {
     }, [slug]);
 
     if (!item) {
+        console.log("sss");
         return null;
     }
 
