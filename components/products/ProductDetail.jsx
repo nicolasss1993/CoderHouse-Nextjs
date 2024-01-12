@@ -1,19 +1,30 @@
-"use client"
-import { useEffect, useState } from 'react';
+//import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import AmountSelect from '@/components/products/AmountSelect';
 import { storage } from '@/utils/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 
-const ProductDetail = ({ slug }) => {
-    const [item, setItem] = useState(null);
+const ProductDetail = async ({ slug }) => {
+    //const [item, setItem] = useState(null);
     console.log("ProductDetail ", slug)
-    useEffect(() => {
+    const item = await fetch(
+        `${process.env.VERCEL_URL}/api/productos/detail/${slug}`,
+        {
+            cache: "no-store",
+            next: {
+                revalidate: 0,
+            },
+        }
+    ).then((r) => r.json());
+    /*useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("Entre al Effect")
                 const url = `${process.env.VERCEL_URL}/api/productos/detail/${slug}`;
                 const response = await fetch(url, { cache: 'no-store' });
+                console.log("Response del fetch ", response);
                 const itemData = await response.json();
+                console.log("ItemData ", itemData);
 
                 const imageUrl = await getDownloadURL(ref(storage, `products/${slug}.webp`));
 
@@ -21,6 +32,7 @@ const ProductDetail = ({ slug }) => {
                     ...itemData,
                     imageUrl,
                 });
+                console.log('Item Ultimo ', item);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setItem(null);
@@ -28,13 +40,13 @@ const ProductDetail = ({ slug }) => {
         };
 
         fetchData();
-    }, [slug]);
+    }, [slug, item]);*/
 
-    if (!item) {
+    /*if (!item) {
         console.log("sss");
         return null;
-    }
-
+    }*/
+    console.log(item)
     return (
         <div className="max-w-4xl m-auto">
             <section className="flex gap-6">
