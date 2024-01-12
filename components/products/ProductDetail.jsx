@@ -10,7 +10,14 @@ const ProductDetail = async ({ slug }) => {
         <div className="max-w-4xl m-auto">
             <section className="flex gap-6">
                 <div className="relative basis-1/2">
-                    <Image src={item.imageUrl} alt={item.title} width={860} height={860} />
+                    <Image
+                        src={item.image}
+                        width={860}
+                        height={860}
+                        alt={item.title}
+                        style={{ width: "auto", height: "auto" }}
+                        priority={true}
+                    />
                 </div>
                 <div className="basis-1/2">
                     <h2 className="text-2xl font-semibold border-b border-gray-200 pb-4 mb-4">{item.title}</h2>
