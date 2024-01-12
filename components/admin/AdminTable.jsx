@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import ProductAdminItem from './AdminItem';
 import Boton from '@/components/utils/Button';
 import CreateForm from './CreateForm';
+import { getCategory } from '@/utils/constants';
 
 const ProductAdminTable = () => {
     const [products, setProducts] = useState([]);
@@ -17,19 +18,16 @@ const ProductAdminTable = () => {
         router.refresh();
     };
 
-    useEffect(()=> {
+    useEffect(() => {
         console.log('Effect ', products)
-        const url = `${process.env.VERCEL_URL}/api/admin/table`
-        try {
-            fetch(url, { cache: 'no-store'})
-                .then(r => r.json())
-                .then((data) => {
-                    setProducts(data);
-                    console.log('Ya guarde la info.')
-                })
-        } catch(err) {
-            return err;
+        const product = async () => {
+            try {
+                setProducts(await getCategory())
+            } catch(err) {
+                return err;
+            }
         }
+        product();
     }, []);
 
     const popUpCreateOpen = () => {
