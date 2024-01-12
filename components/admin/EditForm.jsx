@@ -32,7 +32,7 @@ const updateProduct = async (slug, values, file) => {
 }
 
 
-const EditForm = ({ item, openPopUp }) => {
+const EditForm = ({ item, openPopUp, refreshData }) => {
     const { title, description, stock, price, type, image } = item ? item : valueDefault;
     const [values, setValues] = useState({ title, description, stock, price, type, image })
     const [file, setFile] = useState(null)
@@ -49,6 +49,7 @@ const EditForm = ({ item, openPopUp }) => {
 
         await updateProduct(item.slug, values, file);
         openPopUp();
+        refreshData();
     }
 
     return (
