@@ -19,6 +19,7 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
 
     const deleteProduct = (slug) => {
         const url = `${process.env.VERCEL_URL}/api/admin/table/${slug}`;
+        console.log('URL ', url);
         try {
             fetch(url, { method: 'DELETE'})
                 .then(r => r.json())
