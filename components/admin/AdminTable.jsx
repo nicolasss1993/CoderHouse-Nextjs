@@ -19,7 +19,7 @@ const ProductAdminTable = () => {
 
     useEffect(()=> {
         console.log('Effect ', products)
-        const url = `${process.env.VERCEL_URL}/api/productos/all`
+        const url = `${process.env.VERCEL_URL}/api/admin/table`
         try {
             fetch(url, { cache: 'no-store'})
                 .then(r => r.json())
