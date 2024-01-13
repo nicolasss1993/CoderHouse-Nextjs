@@ -4,37 +4,43 @@ import { useRouter } from "next/navigation"
 import ProductAdminItem from './AdminItem';
 import Boton from '@/components/utils/Button';
 import CreateForm from './CreateForm';
+import { db } from '@/utils/firebase';
+import { getDocs, collection } from "firebase/firestore";
 
-const ProductAdminTable = ({ updateProducts }) => {
-    const [products, setProducts] = useState([]);
-    const [showProduct, setShowProduct] = useState(false);
-    const [showUsers, setShowUsers] = useState(false);
-    const [showSales, setShowSales] = useState(false);
+const ProductAdminTable = () => {
+    const [product, setProduct] = useState([])
     const [openPopUpCreate, setOpenPopUpCreate] = useState(false);
+    const [update, setUpdate] = useState(false);
     const router = useRouter();
 
     const refreshData = () => {
-        router.refresh();
+        console.log('Refresh data', update);
+        setUpdate(!update);
+        console.log('Cambie el update ', update);
+        router.push('/admin/table');
     };
-
-    useEffect(()=>{
-        const url = `${process.env.VERCEL_URL}/api/productos/all`
-        try {
-            fetch(url, { cache: 'no-store'})
-                .then(r => r.json())
-                .then((data) => {
-                    setProducts(data);
-                })
-        } catch(err) {
-            return err;
-        }
-    }, []);
 
     const popUpCreateOpen = () => {
         setOpenPopUpCreate(!openPopUpCreate);
         refreshData();
     };
 
+    useEffect(() => {
+        console.log("Entre al Effect primer nivel.")
+        const fetchProducts = async () => {
+            try {
+                console.log("Entre la effectivo")
+                const querySnapshot = await getDocs(collection(db, "productos"));
+                const products = querySnapshot.docs.map((doc) => doc.data());
+                setProduct(products);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchProducts();
+    }, [update, router]);
+    console.log('PRODUCTOS CANT', product.length);
     return (
         <>
             <div className='flex justify-center align-center mt-8'>
@@ -46,7 +52,7 @@ const ProductAdminTable = ({ updateProducts }) => {
                 {openPopUpCreate && (
                     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
                         <div className="container m-auto mt-6 max-w-lg bg-white p-8 rounded-lg">
-                            <CreateForm openPopUp={() => popUpCreateOpen()} />
+                            <CreateForm openPopUp={() => popUpCreateOpen()} updateData={refreshData} />
                         </div>
                     </div>
                 )}
@@ -63,7 +69,7 @@ const ProductAdminTable = ({ updateProducts }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product, idx) => (
+                    {product.map((product, idx) => (
                         <ProductAdminItem key={product.slug} product={product} refreshData={() => refreshData()} />
                     ))}
                 </tbody>

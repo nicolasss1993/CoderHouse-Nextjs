@@ -79,14 +79,14 @@ export const AuthProvider = ({ children }) => {
                         rol: userData.rol,
                         redirect: userData.redirect
                     });
-                    if (userId.redirect) {
-                        router.push(userId.redirect);
+                    if (userData.rol === 'admin') {
+                        router.push('/admin/table');
                     } else {
                         router.push('/productos/all');
                     }
 
                 } else {
-                    //router.push("/unauthorized");
+                    router.push("/unauthorized");
                     logout();
                 };
 

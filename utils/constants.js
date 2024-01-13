@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, addDoc, collection, updateDoc, query, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, addDoc, collection, updateDoc, query, where, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 export const getDbCart = async (uid) => {
@@ -35,6 +35,17 @@ export const AddProductToCar = async (uid, cart) => {
     const docRef = doc(db, "cart", uid);
     return updateDoc(docRef, { cart: cart });
 };
+
+export const getDetail = async (slug) => {
+    const docRef = doc(db, "productos", slug)
+    const docSnapshot = await getDoc(docRef)
+    return docSnapshot.data();
+};
+
+export const DelProduct = async (slug) => {
+    const documentoRef = doc(db, 'productos', slug);
+    await deleteDoc(documentoRef);
+}
 
 export const LINKS = [
     {

@@ -3,55 +3,52 @@ import React, { useState } from 'react';
 import Boton from '@/components/utils/Button'
 import Image from 'next/image';
 import EditForm from './EditForm';
+import { DelProduct } from '@/utils/constants';
+import { useRouter } from "next/navigation"
 
 const ProductAdminItem = ({ product, refreshData, onDelete }) => {
+    const router = useRouter();
     const [openPopUpEdit, setOpenPopUpEdit] = useState(false);
     const [popUpConfirm, setPopUpConfirm] = useState(false);
     const popUpEditOpen = () => {
         setOpenPopUpEdit(!openPopUpEdit);
-        refreshData();
     };
     const OpenPopUpConfirm = () => {
         setPopUpConfirm(!popUpConfirm);
-        refreshData();
     };
 
     const deleteProduct = (slug) => {
-        const url = `${process.env.VERCEL_URL}/api/admin/table/${slug}`;
-        try {
-            fetch(url, { method: 'DELETE'})
-                .then(r => r.json())
-                .then(() => refreshData())
-        } catch(error) {
-            return null;
-        }
-    }
+        DelProduct(slug);
+    };
 
     return (
         <React.Fragment key={product.slug}>
             {openPopUpEdit && (
                 <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
                     <div className="container m-auto mt-6 max-w-lg bg-white p-8 rounded-lg">
-                        <EditForm item={product} openPopUp={() => popUpEditOpen()} />
+                        <EditForm item={product} openPopUp={() => popUpEditOpen()} refreshData={refreshData} />
                     </div>
                 </div>
             )}
             {popUpConfirm &&
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md">
                     <p className="mb-4">¿Estás seguro de que quieres eliminar este registro?</p>
-                    <Boton
-                        onClick={() => {
-                            setTimeout(() => deleteProduct(product.slug), 1000);
-                            OpenPopUpConfirm();
-                        }}
-                        className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600"
-                        text="Si"
-                    />
-                    <Boton
-                        onClick={() => OpenPopUpConfirm()}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                        text="No"
-                    />
+                    <div className='flex'>
+                        <Boton
+                            onClick={() => {
+                                setTimeout(() => deleteProduct(product.slug), 1000);
+                                OpenPopUpConfirm();
+                                refreshData();
+                            }}
+                            className="w-1/2 bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600"
+                            text="Si"
+                        />
+                        <Boton
+                            onClick={() => OpenPopUpConfirm()}
+                            className="w-1/2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                            text="No"
+                        />
+                    </div>
                 </div>
             }
             <tr>

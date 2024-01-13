@@ -6,7 +6,7 @@ import { doc, setDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "@/utils/firebase"
 
-const createProduct = async (values, file) => {
+const createProduct = async (values, file, updateData) => {
     const storageRef = ref(storage, values.slug);
     const fileSnapshot = await uploadBytes(storageRef, file);
     const fileURL = await getDownloadURL(fileSnapshot.ref);
@@ -15,10 +15,13 @@ const createProduct = async (values, file) => {
     return setDoc(docRef, {
         ...values,
         image: fileURL
-    }).then(() => console.log("Producto creado exitosamente"));
+    }).then(() => {
+        console.log("Producto creado exitosamente");
+        updateData();
+    });
 }
 
-const CreateForm = ({ openPopUp }) => {
+const CreateForm = ({ openPopUp, updateData }) => {
     const [values, setValues] = useState({ 
         title: '', 
         description: '', 
@@ -38,7 +41,7 @@ const CreateForm = ({ openPopUp }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createProduct(values, file);
+        await createProduct(values, file, updateData);
         openPopUp();
     }
 

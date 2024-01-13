@@ -12,7 +12,6 @@ const AmountSelector = ({ item }) => {
     const [amount, setAmount] = useState(1);
     const [update, setUpdate] = useState(false);
     const { userId } = useAuthContext();
-    console.log("AmountSelect ", item);
     const handleAddToCart = () => {
         addToCart({...item, amount});
         setUpdate(true);
