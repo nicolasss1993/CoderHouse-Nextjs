@@ -33,7 +33,7 @@ const ProductAdminItem = ({ product, refreshData, onDelete }) => {
             {popUpConfirm &&
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md">
                     <p className="mb-4">¿Estás seguro de que quieres eliminar este registro?</p>
-                    <div>
+                    <div className='flex'>
                         <Boton
                             onClick={() => {
                                 setTimeout(() => deleteProduct(product.slug), 1000);
